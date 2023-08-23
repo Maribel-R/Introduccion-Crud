@@ -1,24 +1,18 @@
-@props([
-    'item' => [],
-    'route' => '',
-    'method' => '',
-    'title' => '',
-    'button' => '',       
-    ])
-<div class="col-md-6 grid-margin stretch-card">
+<x-layouts.master-layout title="Nuevo Mueble">
+  <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6 col-7">
-                    <h6>{{$title}}</h6>
+                    <h6>Crear mueble</h6>
                 </div>
-                <form action="{{$route}}" method="POST">
-                    @method($method)
-                    @csrf
+                <form action="{{ route('furniture.store') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  @method('PUT')
                     <div class="form-group row">
                         <label for="name" class="mb-0 text-sm">Nombre</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese el título" value="{{ old('name', isset($furniture) ? $furniture->name : '') }}">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese el nombre" value="{{ old('name', isset($furniture) ? $furniture->name : '') }}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -30,7 +24,7 @@
                     <div class="form-group row">
                         <label for="price" class="mb-0 text-sm">Precio</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="price" name="price" placeholder="Ingrese el precio" value="{{ old('price', isset($furniture) ? $furniture->price : '') }}">
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Ingrese el precio" value="{{ old('price', isset($furniture) ? $furniture->price : '') }}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -46,7 +40,10 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">{{ isset($furniture) ? 'Actualizar mueble' : 'Agregar nuevo mueble' }}</button>
+                        <button type="submit" class="btn btn-primary m-1">Agregar nuevo mueble</button>
+                        <a href="{{route('furniture.index')}}" class="font-weight-bold text-xs btn btn-warning text-white m-1">
+                            Volver
+                        </a>
                     </div>
                 </form>
             </div>
@@ -54,3 +51,4 @@
     </div>
 </div>
 
+</x-layouts.master-layout>

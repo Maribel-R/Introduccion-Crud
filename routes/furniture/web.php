@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/furniture',[FurnitureController::class, 'index'])->name('furniture.index');
 Route::get('/furniture/create',[FurnitureController::class, 'create'])->name('furniture.create');
-Route::post('/furniture',[FurnitureController::class, 'store'])->name('furniture.store');
+Route::put('/furniture',[FurnitureController::class, 'store'])->name('furniture.store');
 Route::get('/furniture/{id}/show',[FurnitureController::class, 'show'])->name('furniture.show');
 Route::get('/furniture/{id}/edit', [FurnitureController::class, 'edit'])->name('furniture.edit');
 

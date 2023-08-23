@@ -19,7 +19,7 @@ class FurnitureController extends Controller
         try{
             $furniture = Furniture::all();
 
-            return view('Furnitures/furnitureindex', compact('furniture'));
+            return view('furnitures.index', compact('furniture'));
 
         } catch(\Exception $exception){
             return redirect()->back()->with('error', $exception->getMessage());
@@ -29,7 +29,7 @@ class FurnitureController extends Controller
     public function create()
     {
         // Mostrar el formulario para crear un nuevo mueble retornar vista
-        return view('Furnitures/furniturecreate');
+        return view('furnitures.create');
     }
 
     public function store(StoreRequest $request)
@@ -45,7 +45,7 @@ class FurnitureController extends Controller
 
             DB::commit();
             // return redirect()->back()->with('success','Guardado exitosamente');
-            return redirect()->route('Furnitures/furnitureshow', $furniture->id)->with('success', 'Mueble creado exitosamente');
+            return redirect()->route('furniture.index')->with('success', 'Mueble creado exitosamente');
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
@@ -57,7 +57,7 @@ class FurnitureController extends Controller
         try {
             $furniture = Furniture::findOrFail($furnitureId);
 
-            return view('Furnitures/furnitureshow', compact("furniture"));
+            return view('furnitures.show', compact("furniture"));
             // return $furniture;
         } catch (\Exception $exception){
             return redirect()->back()->with("error", $exception->getMessage());
@@ -70,7 +70,7 @@ class FurnitureController extends Controller
         try {
             $furniture = Furniture::findOrFail($id);
 
-            return view('Furnitures/furnitureedit', compact("furniture"));
+            return view('furnitures.edit', compact("furniture"));
             // return $furniture;
         } catch (\Exception $exception){
             return redirect()->back()->with("error", $exception->getMessage());
@@ -86,8 +86,7 @@ class FurnitureController extends Controller
             $furniture = Furniture::find($id)->update($request->all());
 
             DB::commit();
-
-            return redirect()->route('furniture.index')->with('success', 'Mueble actualizado exitosamente');
+            return redirect()->route('furniture.index')->with('successEdit', 'Mueble editado exitosamente');
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
@@ -100,8 +99,7 @@ class FurnitureController extends Controller
             $furniture = Furniture::findOrFail($furnitureId);
 
             $furniture->delete();
-
-            return redirect()->route('Furnitures/furnitureindex')->with('success', 'Mueble eliminado exitosamente');
+            return redirect()->route('furniture.index')->with('successDelete', 'Mueble eliminado exitosamente');
         } catch (\Exception $exception){
             return redirect()->back()->with("error", $exception->getMessage());
         }

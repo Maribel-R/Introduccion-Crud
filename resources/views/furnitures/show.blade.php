@@ -9,6 +9,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
+                <th> ID </th>
                 <th> Nombre </th>
                 <th> Descripción </th>
                 <th> Precio </th>
@@ -18,6 +19,13 @@
             </thead>
             <tbody>
               <tr>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{$furniture->id}}</h6>
+                      </div>
+                  </div>
+              </td>
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
