@@ -1,7 +1,6 @@
 @props([
     'title' => '',
 ])
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,14 +23,16 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
     @vite([
-    'resources/scss/soft-ui-dashboard.scss', 'resources/css/nucleo-icons.css'])
+    'resources/scss/soft-ui-dashboard.scss',
+    'resources/css/nucleo-icons.css',
+    ])
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-    <x-layouts.sidebar />
+    <x-layouts.sidebar :title="$title" />
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
