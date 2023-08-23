@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\furnitureController;
-use App\Models\furniture;
+use App\Http\Controllers\FurnitureController;
+use App\Models\Furniture;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
-
-Route::get('/furniture',[FurnitureController::class, 'index'])->name('welcome');
+Route::get('/furniture',[FurnitureController::class, 'index'])->name('furniture.index');
 Route::get('/furniture/create',[FurnitureController::class, 'create'])->name('furniture.create');
 Route::post('/furniture',[FurnitureController::class, 'store'])->name('furniture.store');
-Route::get('/furniture/show/{id}',[FurnitureController::class, 'show'])->name('furniture.view');
-Route::get('/furniture/edit/{id}',[FurnitureController::class, 'edit'])->name('furniture.edit');
-Route::put('/furniture/update/{furnitureId}',[FurnitureController::class, 'update'])->name('furniture');
-Route::delete('/furniture/{id}',[furnitureController::class, 'destroy'])->name('furniture.destroy');
+Route::get('/furniture/{id}/show',[FurnitureController::class, 'show'])->name('furniture.show');
+Route::get('/furniture/{id}/edit', [FurnitureController::class, 'edit'])->name('furniture.edit');
+
+Route::put('/furniture/{id}/update',[FurnitureController::class, 'update'])->name('furniture.update');
+Route::delete('/furniture/{id}',[FurnitureController::class, 'destroy'])->name('furniture.destroy');

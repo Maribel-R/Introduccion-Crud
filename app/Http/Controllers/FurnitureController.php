@@ -7,6 +7,8 @@ use App\Http\Requests\Furniture\UpdateRequest;
 use App\Models\Furniture;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class FurnitureController extends Controller
 {
@@ -15,39 +17,36 @@ class FurnitureController extends Controller
     {
         // Mostrar una lista de muebles
         try{
-            $brands = Furniture::all();
+            $furniture = Furniture::all();
 
-            return view('furniture');
+            return view('Furnitures/furnitureindex', compact('furniture'));
+
         } catch(\Exception $exception){
             return redirect()->back()->with('error', $exception->getMessage());
         }
-
-         // Obtén todos los muebles de la base de datos
-        //Manda a create, edit and destroy
     }
 
     public function create()
     {
         // Mostrar el formulario para crear un nuevo mueble retornar vista
-        return view('Furniture/furniturecreate');
+        return view('Furnitures/furniturecreate');
     }
 
     public function store(StoreRequest $request)
     {
-        try{
-            // DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
             $furniture = Furniture::create($request->all());
 
-            if(! $furniture->exists){
-                throw new Exception( 'Error al guardar');
+            if (!$furniture->exists) {
+                throw new Exception('Error al guardar el mueble');
             }
 
-            // DB::commit();
-            return redirect()->route('furniture.show', $furniture->id);
-
+            DB::commit();
             // return redirect()->back()->with('success','Guardado exitosamente');
-        } catch (\Exception $exception){
+            return redirect()->route('Furnitures/furnitureshow', $furniture->id)->with('success', 'Mueble creado exitosamente');
+        } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
     }
@@ -58,41 +57,39 @@ class FurnitureController extends Controller
         try {
             $furniture = Furniture::findOrFail($furnitureId);
 
-            return view('furniture.show', compact("furniture"));
-            return $furniture;
+            return view('Furnitures/furnitureshow', compact("furniture"));
+            // return $furniture;
         } catch (\Exception $exception){
             return redirect()->back()->with("error", $exception->getMessage());
         }
     }
 
-    public function edit(string $furnitureId)
+    public function edit($id)
     {
         // Mostrar el formulario para editar un mueble existente
         try {
-            $furniture = Furniture::findOrFail($furnitureId);
+            $furniture = Furniture::findOrFail($id);
 
-            return view('furniture.edit', compact("furniture"));
-            return $furniture;
+            return view('Furnitures/furnitureedit', compact("furniture"));
+            // return $furniture;
         } catch (\Exception $exception){
             return redirect()->back()->with("error", $exception->getMessage());
         }
     }
 
-    public function update(UpdateRequest $request, string $furnitureId)
+    public function update(UpdateRequest $request, $id)
     {
-        // Actualizar un mueble existente en la base de datos
+            // Actualizar un mueble existente en la base de datos
         try {
-            // DB::beginTransaction();
+            DB::beginTransaction();
 
-            $furniture = Furniture::findOrFail($furnitureId);
+            $furniture = Furniture::find($id)->update($request->all());
 
-            $furniture->update($request->all());
+            DB::commit();
 
-            // DB::commit();
-
-            return redirect()->back()->with('success', 'Actualizado con exito');
-        } catch (\Exception $exception){
-            return redirect()->back()->with("error", $exception->getMessage());
+            return redirect()->route('furniture.index')->with('success', 'Mueble actualizado exitosamente');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
         }
     }
 
@@ -104,7 +101,7 @@ class FurnitureController extends Controller
 
             $furniture->delete();
 
-            return redirect()->back()->with('success', 'Eliminado con exito');
+            return redirect()->route('Furnitures/furnitureindex')->with('success', 'Mueble eliminado exitosamente');
         } catch (\Exception $exception){
             return redirect()->back()->with("error", $exception->getMessage());
         }
