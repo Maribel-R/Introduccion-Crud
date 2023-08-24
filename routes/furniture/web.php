@@ -14,11 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/furniture',[FurnitureController::class, 'index'])->name('furniture.index');
+
+Route::get('/',[FurnitureController::class, 'index'])->name('furniture.index');
 Route::get('/furniture/create',[FurnitureController::class, 'create'])->name('furniture.create');
 Route::put('/furniture',[FurnitureController::class, 'store'])->name('furniture.store');
 Route::get('/furniture/{id}/show',[FurnitureController::class, 'show'])->name('furniture.show');
